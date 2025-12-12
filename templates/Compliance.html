@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compliance & Privacy - Mental Health and Illness</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: url("{{ url_for('static', filename='imml.jpg') }}") no-repeat center center/cover;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .title-bar {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 15px 0;
+            text-align: center;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            backdrop-filter: blur(6px);
+        }
+
+        nav {
+            background: #5b4bff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .box {
+            max-width: 700px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(12px);
+            color: white;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Title Bar -->
+    <div class="title-bar">
+        AI for Mental Health Diagnosis and Therapy Assistance
+    </div>
+
+    <!-- Navigation -->
+   <nav>
+    <a href="/">Overview</a>
+    <a href="/text-voice">Text & Voice</a>
+    <a href="/facial">Facial</a>
+    <a href="/screen">Health Screening</a>          <!-- <-- NEW -->
+    <a href="/compliance">Compliance</a>
+</nav>
+
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="box">
+            <h2>Compliance & Privacy</h2>
+            <p>
+                This section outlines the compliance guidelines and privacy policies related to mental health detection.
+                All data submitted for analysis, including facial images, text, and voice recordings, are processed securely
+                and stored confidentially. Users’ personal information is protected and handled in accordance with applicable
+                privacy laws and ethical standards.
+            </p>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Text & Voice - Mental Health and Illness</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+    body {
+      background: url("{{ url_for('static', filename='imml.jpg') }}") no-repeat center center/cover;
+      min-height:100vh; display:flex; flex-direction:column;
+    }
+    .title-bar {
+      width:100%; background:rgba(0,0,0,0.6); padding:15px 0; text-align:center;
+      color:white; font-size:28px; font-weight:700; letter-spacing:1px; backdrop-filter:blur(6px);
+    }
+    nav { background:#5b4bff; padding:10px; text-align:center; }
+    nav a { color:white; margin:0 15px; text-decoration:none; font-weight:700; }
+    nav a:hover { text-decoration:underline; }
+    .container { flex:1; display:flex; justify-content:center; align-items:center; padding:20px; text-align:center; }
+    .box {
+      max-width:600px; width:100%; background:rgba(255,255,255,0.15);
+      padding:30px; border-radius:15px; box-shadow:0 10px 25px rgba(0,0,0,0.2); backdrop-filter:blur(12px);
+      color:white;
+    }
+    h1 { font-size:34px; margin-bottom:6px; }
+    p.lead { margin-bottom:14px; color:rgba(255,255,255,0.95); }
+    textarea {
+      width:100%; min-height:140px; padding:12px; border-radius:10px; border:2px solid white;
+      background:rgba(255,255,255,0.3); color:white; font-size:16px; resize:none; outline:none;
+    }
+    textarea::placeholder { color:#f5f5f5; }
+    button {
+      background:#ff6b6b; color:white; border:none; padding:12px 20px; margin-top:15px; cursor:pointer;
+      width:100%; font-size:16px; border-radius:8px;
+    }
+    button:hover { background:#e63946; }
+    .result { font-size:18px; margin-top:18px; font-weight:700; color:white; text-align:left; }
+    .error { color:#ff6b6b; font-size:15px; margin-top:12px; text-align:center; }
+  </style>
+</head>
+<body>
+
+  <div class="title-bar">AI for Mental Health Diagnosis and Therapy Assistance</div>
+
+  <nav>
+    <a href="/">Overview</a>
+    <a href="/text-voice">Text &amp; Voice</a>
+    <a href="/facial">Facial</a>
+    <a href="/screen">Health Screening</a>
+    <a href="/compliance">Compliance</a>
+  </nav>
+  <hr style="border:none; height:1px; background:rgba(255,255,255,0.06); margin:0;">
+
+  <div class="container">
+    <div class="box">
+      <h1>Text &amp; Voice Analysis</h1>
+      <p class="lead">Enter text below to analyze emotional tone and mental health indicators.</p>
+
+      <form method="POST" action="/text-voice">
+        <textarea id="textInput" name="text" placeholder="Type or speak your text here..." required>{{ request.form.get('text','') }}</textarea>
+
+        <!-- MIC BUTTON -->
+        <button type="button" id="micBtn" style="background:#1e90ff; margin-top:10px;">🎤 Speak</button>
+
+        <button type="submit">Analyze</button>
+      </form>
+
+      {% if result %}
+        <div class="result">
+          <p>🧠 Analysis Result: {{ result }}</p>
+        </div>
+      {% endif %}
+
+      {% if error %}
+        <div class="error">{{ error }}</div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Voice Recognition Script -->
+  <script>
+    const micBtn = document.getElementById("micBtn");
+    const textInput = document.getElementById("textInput");
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (SpeechRecognition) {
+        const recognition = new SpeechRecognition();
+        recognition.continuous = false;
+        recognition.lang = "en-US";
+        recognition.interimResults = false;
+
+        micBtn.addEventListener("click", () => {
+            micBtn.innerText = "🎙️ Listening...";
+            micBtn.style.background = "#0c7b93";
+            recognition.start();
+        });
+
+        recognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            textInput.value = transcript;
+            micBtn.innerText = "🎤 Speak";
+            micBtn.style.background = "#1e90ff";
+        };
+
+        recognition.onerror = function(event) {
+            console.log("Speech recognition error:", event.error);
+            micBtn.innerText = "🎤 Speak";
+            micBtn.style.background = "#1e90ff";
+        };
+
+        recognition.onend = function() {
+            micBtn.innerText = "🎤 Speak";
+            micBtn.style.background = "#1e90ff";
+        };
+
+    } else {
+        micBtn.disabled = true;
+        micBtn.innerText = "🎤 Voice Not Supported";
+    }
+  </script>
+
+</body>
+</html>

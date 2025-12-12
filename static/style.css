@@ -1,0 +1,35 @@
+/* static/style.css */
+body {
+  background: #f4f6f9;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  max-width: 700px;
+  margin: 60px auto;
+  background: #fff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  text-align: center;
+}
+input[type="file"] {
+  margin: 12px 0;
+}
+button {
+  background: #1976d2;
+  color: #fff;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+button:hover { opacity: 0.95; }
+.result img {
+  max-width: 320px;
+  margin-top: 18px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+h2 { color: #333; margin-top: 10px; }

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI for Mental Health Diagnosis and Therapy Assistance</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+    body {
+      background: url("{{ url_for('static', filename='imml.jpg') }}") no-repeat center center/cover;
+      min-height:100vh; display:flex; flex-direction:column;
+    }
+    .title-bar {
+      width:100%; background:rgba(0,0,0,0.6); padding:15px 0; text-align:center;
+      color:white; font-size:28px; font-weight:700; letter-spacing:1px; backdrop-filter:blur(6px);
+    }
+    nav { background:#5b4bff; padding:10px; text-align:center; }
+    nav a { color:white; margin:0 15px; text-decoration:none; font-weight:700; }
+    nav a:hover { text-decoration:underline; }
+    .hero {
+      display:flex; justify-content:center; align-items:center; padding:40px 20px;
+    }
+    .card {
+      background: rgba(0,0,0,0.45);
+      color: #fff;
+      max-width:900px;
+      width:100%;
+      padding:34px;
+      border-radius:16px;
+      text-align:center;
+      box-shadow:0 10px 30px rgba(0,0,0,0.4);
+      backdrop-filter: blur(8px);
+    }
+    .card h1 { font-size:36px; margin-bottom:8px; }
+    .card p.lead { color:rgba(255,255,255,0.9); margin-bottom:18px; font-size:16px; }
+
+    /* Objectives grid */
+    .grid {
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap:18px;
+      margin-top:22px;
+      text-align:left;
+    }
+    .obj {
+      background: rgba(255,255,255,0.06);
+      border-radius:12px;
+      padding:16px;
+      border:1px solid rgba(255,255,255,0.06);
+      min-height:150px;
+    }
+    .obj h3 { margin-bottom:8px; font-size:18px; color:#fff; }
+    .obj .outcome { font-size:14px; margin-bottom:8px; color:#e6eef8; }
+    .obj .research, .obj .standards { font-size:13px; color:#d6e2ff; }
+    .source {
+      margin-top:16px; color:rgba(255,255,255,0.8); font-size:13px; text-align:right;
+    }
+
+    /* small responsive */
+    @media (max-width:520px){
+      .card h1{ font-size:26px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="title-bar">AI for Mental Health Diagnosis and Therapy Assistance</div>
+
+  <nav>
+    <a href="/">Overview</a>
+    <a href="/text-voice">Text &amp; Voice</a>
+    <a href="/facial">Facial</a>
+    <a href="/screen">Health Screening</a>
+    <a href="/compliance">Compliance</a>
+  </nav>
+  <hr style="border:none; height:1px; background:rgba(255,255,255,0.06); margin:0;">
+
+  <div class="hero">
+    <div class="card">
+      <h1>Overview</h1>
+      <p class="lead">Welcome to the Mental Health Detection system. Use the tabs above to explore features. Below are the core objectives and outcomes of this project.</p>
+
+      <!-- Objectives grid (sourced from uploaded use-case) -->
+      <div class="grid">
+
+        <div class="obj">
+          <h3>Objective 1 — Voice &amp; Text Emotion Analysis</h3>
+          <div class="outcome"><strong>Outcome:</strong> Build AI models to analyze voice modulations and textual expressions for signs of anxiety, depression, and stress.</div>
+          <div class="research"><strong>Research scope:</strong> Explore transformer-based models for cross-modal sentiment and emotion analysis (voice + text).</div>
+          <div class="standards"><strong>Standards:</strong> Align with WHO mental health guidelines and GDPR for privacy & data protection.</div>
+        </div>
+
+        <div class="obj">
+          <h3>Objective 2 — Facial Expression Recognition</h3>
+          <div class="outcome"><strong>Outcome:</strong> Develop deep learning models to detect micro-expressions and facial indicators of mental distress from camera feeds or videos.</div>
+          <div class="research"><strong>Research scope:</strong> Study hybrid CNN + attention architectures for robust facial recognition and micro-expression detection.</div>
+          <div class="standards"><strong>Standards:</strong> Follow applicable facial-recognition standards such as ISO/IEC 30137.</div>
+        </div>
+
+        <div class="obj">
+          <h3>Objective 3 — AI-Powered Therapeutic Chatbot</h3>
+          <div class="outcome"><strong>Outcome:</strong> Design an LLM-based chatbot for supportive, non-intrusive therapeutic interactions.</div>
+          <div class="research"><strong>Research scope:</strong> Investigate reinforcement learning and response-ranking techniques to improve empathy and safety of responses.</div>
+          <div class="standards"><strong>Standards:</strong> Ensure ethical AI alignment (e.g., IEEE P7001) and safety guardrails for mental-health use.</div>
+        </div>
+
+        <div class="obj">
+          <h3>Objective 4 — Behavioral Data Analytics</h3>
+          <div class="outcome"><strong>Outcome:</strong> Analyze longitudinal user behavior to provide actionable insights to therapists and caregivers.</div>
+          <div class="research"><strong>Research scope:</strong> Explore predictive analytics and time-series modeling to track mental health trends.</div>
+          <div class="standards"><strong>Standards:</strong> Adhere to ISO standards for statistical data & metadata exchange (e.g., ISO 13120).</div>
+        </div>
+
+        <div class="obj">
+          <h3>Objective 5 — Cloud Deployment &amp; Scalability</h3>
+          <div class="outcome"><strong>Outcome:</strong> Deploy the system on cloud (AWS/Azure) with secure encryption and access controls for scalability.</div>
+          <div class="research"><strong>Research scope:</strong> Study cost-efficient, secure deployment strategies for AI-driven mental-health applications.</div>
+          <div class="standards"><strong>Standards:</strong> Comply with cloud security standards such as ISO/IEC 27001.</div>
+        </div>
+
+      </div>
+
+      <div class="source">
+
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

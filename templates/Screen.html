@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI for Mental Health Diagnosis and Therapy Assistance</title>
+
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+    body {
+      background: url("{{ url_for('static', filename='imml.jpg') }}") center/cover no-repeat;
+      min-height:100vh; display:flex; flex-direction:column;
+    }
+
+    .title-bar {
+      width:100%;
+      background: rgba(0,0,0,0.6);
+      padding:18px 0;
+      text-align:center;
+      color:white;
+      font-size:28px;
+      font-weight:700;
+      letter-spacing:1px;
+      backdrop-filter:blur(6px);
+    }
+
+    nav {
+      background:#5b4bff;
+      padding:10px 0;
+      text-align:center;
+    }
+    nav a {
+      color:white;
+      margin:0 24px;
+      text-decoration:none;
+      font-weight:700;
+      font-size:18px;
+    }
+    nav a:hover { text-decoration:underline; }
+    nav a.active { text-decoration:underline; }
+
+    .container { flex:1; display:flex; justify-content:center; align-items:center; padding:28px; }
+    .box {
+      width:760px;
+      max-width:95%;
+      background:rgba(255,255,255,0.15);
+      padding:28px;
+      border-radius:14px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.25);
+      backdrop-filter:blur(12px);
+      color:white;
+    }
+
+    h2 { font-size:28px; margin-bottom:8px; color:white; }
+
+    /* form text black */
+    label {
+      margin-top:12px;
+      display:block;
+      font-weight:600;
+      color:black;
+    }
+
+    input, select {
+      width:100%;
+      padding:10px 12px;
+      border-radius:10px;
+      border:2px solid black;
+      background:rgba(255,255,255,0.9);
+      color:black;
+      margin-bottom:10px;
+      font-weight:600;
+      font-size:15px;
+    }
+
+    input::placeholder { color: #555; }
+
+    .row { display:flex; gap:12px; }
+    .col { flex:1; }
+
+    button {
+      width:100%;
+      padding:12px;
+      background:#ff6b6b;
+      color:white;
+      border:none;
+      border-radius:10px;
+      margin-top:12px;
+      font-size:16px;
+      cursor:pointer;
+    }
+    button:hover { background:#e65555; }
+
+    .error { color:#ff6b6b; margin-top:12px; text-align:center; }
+
+    .result-box {
+      margin-top:18px;
+      background:rgba(0,0,0,0.3);
+      padding:14px;
+      border-radius:10px;
+    }
+
+    table { width:100%; color:white; border-collapse:collapse; margin-top:6px; }
+    th, td { padding:10px 8px; border-bottom:1px solid rgba(255,255,255,0.08); text-align:left; font-size:14px; }
+    th { font-weight:700; }
+
+    /* Chat styles */
+    .chat-container { margin-top:18px; }
+    #chat-window {
+      background: rgba(0,0,0,0.35);
+      padding:12px;
+      border-radius:10px;
+      height:220px;
+      overflow:auto;
+      color:white;
+      font-size:14px;
+      line-height:1.4;
+    }
+
+    /* fixed visible chat input (big and clear) */
+    .chat-controls {
+      display:flex;
+      gap:12px;
+      margin-top:10px;
+      align-items:center;
+    }
+    #chat-input {
+      flex:1;
+      height:45px;
+      padding:10px 14px;
+      border-radius:10px;
+      border:2px solid white;
+      background:rgba(255,255,255,0.95);
+      color:black;
+      font-size:15px;
+    }
+    #chat-send {
+      height:45px;
+      padding:0 28px;
+      border-radius:10px;
+      background:#ff6b6b;
+      color:white;
+      border:none;
+      cursor:pointer;
+      font-size:15px;
+    }
+    #chat-send:hover { background:#e65555; }
+
+    /* small responsive tweaks */
+    @media (max-width:640px){
+      nav a { margin:0 10px; font-size:15px; }
+      .box { padding:18px; }
+      #chat-input { height:42px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="title-bar">AI for Mental Health Diagnosis and Therapy Assistance</div>
+
+  <nav>
+    <a href="/">Overview</a>
+    <a href="/text-voice">Text &amp; Voice</a>
+    <a href="/facial">Facial</a>
+    <a href="/screen" class="active">Health Screening</a>
+    <a href="/compliance">Compliance</a>
+  </nav>
+
+  <div class="container">
+    <div class="box">
+      <h2>Depression &amp; Anxiety Screening</h2>
+
+      <!-- FORM -->
+      <form method="POST" action="/screen">
+        <div class="row">
+          <div class="col">
+            <label for="age">Age</label>
+            <input id="age" name="age" type="number" min="5" max="100" required value="{{ request.form.get('age','') }}">
+          </div>
+          <div class="col">
+            <label for="school_year">School Year</label>
+            <input id="school_year" name="school_year" type="text" required value="{{ request.form.get('school_year','') }}">
+          </div>
+        </div>
+
+        <label for="gender">Gender</label>
+        <select id="gender" name="gender">
+          <option value="">-- Select --</option>
+          <option value="male" {% if request.form.get('gender')=='male' %}selected{% endif %}>Male</option>
+          <option value="female" {% if request.form.get('gender')=='female' %}selected{% endif %}>Female</option>
+          <option value="other" {% if request.form.get('gender')=='other' %}selected{% endif %}>Other</option>
+        </select>
+
+        <div class="row">
+          <div class="col">
+            <label for="bmi">BMI</label>
+            <input id="bmi" name="bmi" type="number" step="0.1" required value="{{ request.form.get('bmi','') }}">
+          </div>
+          <div class="col">
+            <label for="who_bmi">WHO BMI Category</label>
+            <input id="who_bmi" name="who_bmi" type="text" required value="{{ request.form.get('who_bmi','') }}">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <label for="phq_score">PHQ Score</label>
+            <input id="phq_score" name="phq_score" type="number" required value="{{ request.form.get('phq_score','') }}">
+          </div>
+          <div class="col">
+            <label for="gad_score">GAD Score</label>
+            <input id="gad_score" name="gad_score" type="number" required value="{{ request.form.get('gad_score','') }}">
+          </div>
+        </div>
+
+        <label for="epworth_score">Epworth Score</label>
+        <input id="epworth_score" name="epworth_score" type="number" required value="{{ request.form.get('epworth_score','') }}">
+
+        <button type="submit">Predict</button>
+      </form>
+
+      {% if error %}
+        <div class="error">{{ error }}</div>
+      {% endif %}
+
+      <!-- RESULTS -->
+      {% if results %}
+      <div class="result-box">
+        <h3 style="margin-top:0; margin-bottom:8px;">Screening Results</h3>
+        <table>
+          <thead>
+            <tr><th>Label</th><th>Prediction</th><th>Confidence</th></tr>
+          </thead>
+          <tbody>
+            {% for k,v in results.items() %}
+            <tr>
+              <td>{{ k }}</td>
+              <td>{{ v.prediction }}</td>
+              <td>
+                {% if v.confidence %}
+                  {{ (v.confidence * 100) | round(1) }}%
+                {% else %}
+                  -
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- CHATBOT (appears only after results) -->
+      <div class="chat-container">
+        <script>window.SCREEN_RESULTS = {{ results|tojson | safe }};</script>
+
+        <h3 style="color:white; margin-top:16px; margin-bottom:8px;">Treatment Chatbot</h3>
+
+        <div id="chat-window">
+          <p><strong>Bot:</strong> Hi — I can help you understand your screening results and suggest next steps. Ask things like “What should I do for moderate depression?” or “How to reduce anxiety?”</p>
+        </div>
+
+       <div class="chat-controls" style="margin-top:12px; display:flex; gap:10px;">
+  <input id="chat-input" type="text" placeholder="Ask about treatment or your results..." />
+  <button id="chat-send">Send</button>
+</div>
+        <style>
+  #chat-input {
+    flex: 1;                /* makes input take more width */
+    padding: 14px 18px;     /* increase height */
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+  }
+
+  #chat-send {
+    padding: 8px 16px;      /* smaller button size */
+    font-size: 14px;
+    border-radius: 10px;
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+  #chat-send:hover {
+    opacity: 0.9;
+  }
+</style>
+      </div>
+
+      <script>
+        // Chat helper functions
+        function appendBot(text){
+          const cw = document.getElementById('chat-window');
+          cw.innerHTML += `<p><strong>Bot:</strong> ${text}</p>`;
+          cw.scrollTop = cw.scrollHeight;
+        }
+        function appendUser(text){
+          const cw = document.getElementById('chat-window');
+          cw.innerHTML += `<p><strong>You:</strong> ${text}</p>`;
+          cw.scrollTop = cw.scrollHeight;
+        }
+
+        async function sendChat(){
+          const inp = document.getElementById('chat-input');
+          const msg = (inp.value||'').trim();
+          if(!msg) return;
+          appendUser(msg);
+          inp.value = '';
+          try {
+            const resp = await fetch('/chatbot', {
+              method:'POST',
+              headers:{'Content-Type':'application/json'},
+              body: JSON.stringify({ message: msg, results: window.SCREEN_RESULTS })
+            });
+            const data = await resp.json();
+            appendBot(data.reply.replace(/\n/g,'<br>'));
+          } catch(err){
+            appendBot('Sorry — could not contact server. Try again later.');
+            console.error(err);
+          }
+        }
+
+        document.getElementById('chat-send').addEventListener('click', sendChat);
+        document.getElementById('chat-input').addEventListener('keydown', (e) => {
+          if(e.key === 'Enter') sendChat();
+        });
+      </script>
+      {% endif %}
+      <!-- end results/chatbot -->
+
+    </div><!-- box -->
+  </div><!-- container -->
+
+</body>
+</html>

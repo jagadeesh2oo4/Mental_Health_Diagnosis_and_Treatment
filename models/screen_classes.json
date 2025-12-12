@@ -1,0 +1,58 @@
+{
+    "depression_severity": [
+        "Mild",
+        "Moderate",
+        "Moderately severe",
+        "None-minimal",
+        "Severe",
+        "nan",
+        "none"
+    ],
+    "depressiveness": [
+        "False",
+        "True",
+        "nan"
+    ],
+    "suicidal": [
+        "False",
+        "True",
+        "nan"
+    ],
+    "depression_diagnosis": [
+        "False",
+        "True",
+        "nan"
+    ],
+    "depression_treatment": [
+        "False",
+        "True",
+        "nan"
+    ],
+    "anxiety_severity": [
+        "0",
+        "Mild",
+        "Moderate",
+        "None-minimal",
+        "Severe"
+    ],
+    "anxiousness": [
+        "False",
+        "True",
+        "nan"
+    ],
+    "anxiety_diagnosis": [
+        "False",
+        "True",
+        "nan"
+    ],
+    "anxiety_treatment": [
+        "False",
+        "True",
+        "nan"
+    ],
+    "sleepiness": [
+        "False",
+        "True",
+        "nan"
+    ]
+}
