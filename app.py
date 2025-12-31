@@ -97,7 +97,11 @@ SCREEN_MODEL, SCREEN_ENCODERS = load_screening_model()
 # -------------------
 @app.route("/")
 def overview():
-    return render_template("Overview.html")
+    return render_template("index.html")
+
+@app.route("/index")
+def overview():
+    return render_template("index.html")
 
 @app.route("/text-voice", methods=['GET', 'POST'])
 def text_voice():
